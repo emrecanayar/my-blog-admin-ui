@@ -1,0 +1,245 @@
+.datatable {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.datatable table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Nunito', sans-serif;
+}
+
+
+/* Table headers */
+.datatable th {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Table rows and cells */
+.datatable td {
+  padding: 7px;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+}
+
+/* Zebra striping for rows */
+.datatable tr {
+  font-size: 12px;
+}
+
+
+/* Zebra striping for rows */
+.datatable tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.datatable th,
+.datatable td {
+  padding: 10px; /* Adjust as needed */
+  text-align: left; /* Adjust text alignment as needed */
+  /* Other styles like font, color, etc., to ensure consistency */
+}
+
+/* Remove any additional margins that might be causing misalignment */
+.datatable th,
+.datatable td {
+  margin: 0;
+}
+
+/* Ensure that border, font size, and box-sizing are the same for both th and td */
+.datatable th,
+.datatable td {
+  border: 1px solid #ddd; /* Example border */
+  font-size: 16px; /* Example font size */
+  box-sizing: border-box; /* Ensures padding does not add to the total width */
+}
+
+
+/* Button styles */
+.datatable button {
+  background-color: #6439ff;
+  /* New primary color */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+  /* Optional: if you want rounded corners */
+}
+
+.datatable button:hover {
+  background-color: #5b33e8;
+  /* A slightly darker shade for hover state */
+}
+
+.datatable button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+
+.datatable input[type="text"] {
+  width: 15%;
+  /* Full width */
+  padding: 8px 15px;
+  /* Some padding */
+  margin: 5px 0;
+  /* Some space around */
+  box-sizing: border-box;
+  /* Make sure padding doesn't affect the width */
+  border: 1px solid lightgray;
+  /* Grey border */
+  border-radius: 2px;
+  /* Slightly rounded borders for a softer look */
+  font-size: 12px;
+  /* Font size similar to the rest of the site */
+  background-color: white;
+  background-position: 10px 10px;
+  /* Position the search icon */
+  background-repeat: no-repeat;
+  /* Do not repeat the icon */
+  padding-left: 3px;
+  /* Ensure text doesn't overlay the icon */
+  transition: border-color 0.2s;
+  /* Smooth transition for hover effects */
+}
+
+/* When the input field gets focus, change the border color */
+.datatable input[type="text"]:focus {
+  border-color: lightgray;
+  /* Highlight with a blue border */
+  outline: none;
+  /* Remove the default outline */
+}
+
+
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px;
+  background: white;
+}
+
+.cardTitle {
+  padding: 16px;
+  background: #f7f7f7;
+  color: #333;
+  font-size: 24px;
+  font-family: 'Your Font', sans-serif;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Search and Add button container */
+.datatable .search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* This will vertically align the input and button */
+  padding-bottom: 10px; /* Adjust as needed */
+}
+
+/* Search input with 15% width */
+.datatable input[type="text"] {
+  width: 15%;
+  /* Rest of your existing input styles */
+  /* Remove the flex-grow property if it was previously set */
+}
+
+/* Add button */
+.datatable .addButton {
+  background-color: #6439ff; /* Your primary color */
+  color: white;
+  padding: 10px 20px;
+  margin-left: 10px; /* To add some space between the input and button */
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+}
+
+.datatable .addButton:hover {
+  background-color: #5b33e8; /* A slightly darker shade for hover state */
+}
+
+.datatable .paginationContainer {
+  display: flex;
+  justify-content: space-between; /* Separates the pagination and the selector */
+  align-items: center;
+  padding-top: 10px;
+}
+
+
+/* Pagination container */
+.datatable .pagination {
+  flex-grow: 1; /* Takes up all available space */
+  display: flex;
+  gap: 5px; /* This adds space between your pagination buttons */
+  /* Add more styles as needed, like padding or specific button styles */
+}
+
+.datatable .pageSizeSelector {
+  margin-left: auto;
+}
+/* Select dropdown styles */
+.datatable .pageSizeSelector select {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  /* Add more styles if needed */
+}
+
+/* You may want to add responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .datatable .pagination {
+    flex-wrap: wrap;
+  }
+
+  .datatable select {
+    margin-top: 10px; /* Adds space above the select on small screens */
+  }
+}
+
+/* You may want to add responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .datatable .search {
+    flex-direction: column;
+  }
+
+  .datatable input[type="text"],
+  .datatable .addButton {
+    width: 100%;
+    margin-bottom: 10px; /* Adds space below the input on small screens */
+  }
+
+  .datatable .addButton {
+    width: auto; /* Keeps the button width to content size */
+  }
+}
+
+
+/* Responsive table */
+@media screen and (max-width: 768px) {
+  .datatable table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    /* Enables horizontal scrolling on small screens */
+  }
+
+  .datatable input[type="text"] {
+    width: 100%;
+    /* Full width on small screens */
+  }
+}
