@@ -14,9 +14,10 @@ import styles from "./dataTable.module.css";
 export interface DataTableProps {
   data: any;
   columns: any;
+  tableTitle: string;
 }
 
-const DataTable = ({ data, columns }: DataTableProps) => {
+const DataTable = ({ data, columns, tableTitle }: DataTableProps) => {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
 
@@ -41,7 +42,7 @@ const DataTable = ({ data, columns }: DataTableProps) => {
 
   return (
     <div className={styles.card}>
-      <div className={styles.cardTitle}>Movies List</div>
+      <div className={styles.cardTitle}>{tableTitle}</div>
       <div className={styles.datatable}>
         <div className={styles.search}>
           <input

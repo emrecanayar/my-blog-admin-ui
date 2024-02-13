@@ -44,10 +44,10 @@ return(
             <span>Users</span>
           </li>
         </Link>
-        <Link to="/products" style={{ textDecoration: "none" }}>
+        <Link to="/categories" style={{ textDecoration: "none" }}>
           <li>
             <StoreIcon className={styles.icon} />
-            <span>Products</span>
+            <span>Kategoriler</span>
           </li>
         </Link>
         <li>

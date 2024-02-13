@@ -7,6 +7,8 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { DarkModeContext } from "./context/darkModeContext";
+import "react-toastify/dist/ReactToastify.css";
+import CategoryList from "./pages/category/CategoryList";
 
 type Input = {
   id: string;
@@ -36,6 +38,7 @@ function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
+            <Route path="categories" element={<CategoryList />} />
             <Route path="users">
               <Route index element={<List />} />
               <Route path=":userId" element={<Single />} />
