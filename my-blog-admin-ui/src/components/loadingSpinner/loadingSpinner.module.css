@@ -1,0 +1,33 @@
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .loader {
+    border: 5px solid #f3f3f3; /* Açık gri rengindeki kenar */
+    border-top: 5px solid #3498db; /* Mavi rengindeki üst kenar */
+    border-radius: 50%; /* Daire şeklini verir */
+    width: 50px; /* Loader genişliği */
+    height: 50px; /* Loader yüksekliği */
+    animation: spin 2s linear infinite; /* Dönen animasyon */
+    margin: 0; /* Loader'ı ortalar */
+  }
+  
+  /* Ekranın ortasında dönen bir loader için */
+  .fullScreenLoader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Tüm ekranı kaplar */
+  }
+  
+  .spinnerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Kapsayıcının boyutunu DataTable boyutuna uyarla */
+  }

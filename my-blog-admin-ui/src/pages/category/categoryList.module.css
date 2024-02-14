@@ -6,3 +6,11 @@
   .list .listContainer {
     flex: 6;
   }
+
+  .datatableContainer {
+    position: relative; /* Pozisyon referansını belirleyin */
+    min-height: 200px; /* Yeterli yükseklik sağlayın */
+    display: flex;
+    justify-content: center; /* Yatay olarak ortala */
+    align-items: center; /* Dikey olarak ortala */
+  }

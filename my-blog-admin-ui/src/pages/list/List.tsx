@@ -33,7 +33,7 @@ const List = () => {
           <Sidebar/>
           <div className={styles.listContainer}>
             <Navbar/>
-            <Datatable data={data} columns={movieColumns} tableTitle="Film Listesi"/>
+            <Datatable data={data} columns={movieColumns} tableTitle="Film Listesi" modalContent={""} modalTitle="Film Ekle" handleSubmit={1}/>
           </div>
         </div>
       )

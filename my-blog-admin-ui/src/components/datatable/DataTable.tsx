@@ -10,16 +10,28 @@ import {
 } from "@tanstack/react-table";
 
 import styles from "./dataTable.module.css";
+import Modal from "../modal/Modal";
 
 export interface DataTableProps {
   data: any;
   columns: any;
   tableTitle: string;
+  modalContent: any;
+  modalTitle: string;
+  handleSubmit:any;
 }
 
-const DataTable = ({ data, columns, tableTitle }: DataTableProps) => {
+const DataTable = ({
+  data,
+  columns,
+  tableTitle,
+  modalContent,
+  modalTitle,
+  handleSubmit,
+}: DataTableProps) => {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -35,11 +47,6 @@ const DataTable = ({ data, columns, tableTitle }: DataTableProps) => {
     onGlobalFilterChange: setFiltering,
   });
 
-  const handleAddClick = () => {
-    // Handle the add button click event here
-    console.log("Add button clicked");
-  };
-
   return (
     <div className={styles.card}>
       <div className={styles.cardTitle}>{tableTitle}</div>
@@ -51,9 +58,20 @@ const DataTable = ({ data, columns, tableTitle }: DataTableProps) => {
             placeholder="Ara..."
             onChange={(e) => setFiltering(e.target.value)}
           />
-          <button className={styles.addButton} onClick={handleAddClick}>
+          <button
+            className={styles.addButton}
+            onClick={() => setIsModalOpen(true)}
+          >
             Ekle
           </button>
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title={modalTitle}
+            onSave={handleSubmit}
+          >
+            {modalContent}
+          </Modal>
         </div>
         <table>
           <thead>

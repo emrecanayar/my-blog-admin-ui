@@ -1,0 +1,175 @@
+/* Modal.css */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 10px; /* Adjust the value to move the close icon up or down */
+  right: 10px; /* Adjust the value to move the close icon left or right */
+  background: transparent;
+  border: none;
+  font-size: 24px; /* This sets the size of the '×' character */
+  cursor: pointer;
+  line-height: 1;
+  color: #bbb; /* Light grey color, can change as needed */
+  font-weight: bold;
+}
+
+.closeIcon:hover,
+.closeIcon:focus {
+  color: #999; /* Darker grey on hover/focus for better user experience */
+  text-decoration: none; /* Removes underline text on hover/focus */
+}
+
+/* Ensure that the close icon is keyboard accessible for accessibility reasons */
+.closeIcon[role="button"] {
+  outline: none;
+}
+
+.closeIcon[role="button"]:focus {
+  outline: thin dotted;
+}
+
+/* Form Stilleri */
+.formRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.formGroup {
+  flex: 1; /* Her bir form grubu eşit genişlikte olacak */
+  margin-right: 10px; /* Gruplar arası boşluk */
+}
+
+.formGroup:last-child {
+  margin-right: 0; /* Son grup için sağ boşluk kaldırılıyor */
+}
+
+.formGroup.checkboxGroup {
+  display: flex;
+  align-items: center; /* Checkbox ve label'ı dikey olarak ortala */
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="file"],
+.formGroup textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.formGroup input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.formGroup button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Dosya yükleme stilini gizle */
+.hiddenFileInput {
+  display: none;
+}
+
+/* Yeni yükleme etiketi/butonu için stil */
+.fileInputLabel {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.fileInputLabel:hover {
+  background-color: #0056b3;
+}
+
+/* Seçilen dosya adı için stil */
+.fileName {
+  margin-left: 10px;
+  font-style: italic;
+  color: #666;
+}
+
+/* modal.module.css içindeki mevcut stillere ek olarak */
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end; /* Butonları sağa yaslar */
+  padding: 1rem; /* İsteğe bağlı padding */
+}
+
+.saveButton {
+  background-color: #28a745 !important; /* Yeşil arka plan */
+  color: white; /* Beyaz yazı */
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem; /* Sağdaki butondan boşluk */
+  cursor: pointer;
+  border-radius: 0.25rem; /* Hafif yuvarlak köşeler */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.saveButton:hover {
+  background-color: #218838 !important;  /* Hover durumunda daha koyu yeşil */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton {
+  background-color: #6c757d !important; /* Gri arka plan */
+  color: white; /* Beyaz yazı */
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem; /* Hafif yuvarlak köşeler */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  background-color: #5a6268 !important; /* Hover durumunda daha koyu gri */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
