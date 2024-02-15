@@ -36,7 +36,7 @@ apiClient.interceptors.response.use(
         break;
       case 401: // Authorization Error
         customError.generalMessage = data.Detail || "Yetkilendirme hatası.";
-        window.location.href = '/login';
+        window.location.href = "/login";
         break;
       case 404: // Not Found Error
         customError.generalMessage = data.Detail || "Kaynak bulunamadı.";
@@ -53,9 +53,9 @@ apiClient.interceptors.response.use(
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // Tokenı al
+    const token = localStorage.getItem("token"); // Tokenı al
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`; // Header'a ekle
+      config.headers["Authorization"] = `Bearer ${token}`; // Header'a ekle
     }
     return config;
   },
@@ -75,6 +75,9 @@ const apiService = {
 
   delete: (url: string) =>
     apiClient.delete(url).then((response) => response.data),
+
+  postFormData: (url: string, formData: FormData) =>
+    apiClient.post(url, formData).then((response) => response.data),
 };
 
 export default apiService;

@@ -9,6 +9,8 @@ import categoryStore from "../../stores/category/categoryStore";
 import { GetListCategoryListItemDto } from "../../services/catagory/dtos/getListCategoryListItemDto";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { CreateCategoryCommand } from "../../services/catagory/dtos/createCategoryCommand";
+import { ToastContainer, toast } from "react-toastify";
+import uploadedFileStore from "../../stores/uploadedFile/uploadedFileStore";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -66,6 +68,7 @@ const CategoryList = observer(() => {
 
   const handleFileSelect = (event: any) => {
     const [file] = event.target.files;
+    handleFileSelectSend([file]);
     const fileNameLabel = document.getElementById("fileName");
     if (file) {
       if (fileNameLabel !== null) {
@@ -82,8 +85,36 @@ const CategoryList = observer(() => {
     event.preventDefault();
     try {
       await categoryStore.createCategory(createCategory);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Category adding failed", error);
+
+      if (error.validationErrors) {
+        error.validationErrors.forEach((valError: any) => {
+          valError.Errors.forEach((errMsg: any) => {
+            toast.warning(errMsg);
+          });
+        });
+      } else if (error.generalMessage && error.validationErrors === null) {
+        toast.error(error.generalMessage);
+      }
+    }
+  };
+
+  const handleFileSelectSend = async (file: any) => {
+    try {
+      await uploadedFileStore.uploadFile(file);
+    } catch (error: any) {
+      console.error("Category adding failed", error);
+
+      if (error.validationErrors) {
+        error.validationErrors.forEach((valError: any) => {
+          valError.Errors.forEach((errMsg: any) => {
+            toast.warning(errMsg);
+          });
+        });
+      } else if (error.generalMessage && error.validationErrors === null) {
+        toast.error(error.generalMessage);
+      }
     }
   };
 
@@ -162,6 +193,18 @@ const CategoryList = observer(() => {
           />
         )}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 });

@@ -1,18 +1,12 @@
 import { action, observable } from "mobx";
 import { UserForLoginDto } from "../../services/auth/dtos/userForLoginDto";
 import authService from "../../services/auth/authService";
-import { CustomError } from "../../services/base/exceptionModels/CustomError";
 import { LoggedHttpResponse } from "../../services/auth/dtos/loggedHttpResponse";
+import { BaseStore } from "../base/baseStore";
 
-export class AuthStore {
-  @observable formErrors: CustomError = {
-    generalMessage: "",
-    validationErrors: null,
-    status: 0,
-  };
-
+export class AuthStore extends BaseStore {
   @observable loggedHttpResponse: LoggedHttpResponse = {} as LoggedHttpResponse;
-
+ 
   @action
   login = async (login: UserForLoginDto) => {
     try {
@@ -22,30 +16,19 @@ export class AuthStore {
       return response;
     } catch (error: any) {
       if (error.status && error.generalMessage && error.validationErrors) {
-        // API'den gelen hata mesajlarını formErrors'a atayın
         this.setFormErrors(error);
         console.log("Errors", this.formErrors);
       } else {
-        // Genel bir hata mesajı
         this.setFormErrors({
           generalMessage: "An unexpected error occurred.",
           validationErrors: null,
           status: error.status,
         });
       }
-      throw error; // Hataları component'e de iletebiliriz
+      throw error;
     }
   };
-
-  @action
-  setFormErrors = (errors: CustomError) => {
-    this.formErrors = errors;
-  };
-
-  @action
-  clearFormErrors = () => {
-    this.formErrors = { generalMessage: "", validationErrors: null, status: 0 };
-  };
+  
 }
 const authStore = new AuthStore();
 export default authStore;

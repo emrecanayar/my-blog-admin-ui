@@ -18,7 +18,7 @@ export interface DataTableProps {
   tableTitle: string;
   modalContent: any;
   modalTitle: string;
-  handleSubmit:any;
+  handleSubmit: any;
 }
 
 const DataTable = ({

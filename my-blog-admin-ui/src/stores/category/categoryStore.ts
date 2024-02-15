@@ -3,8 +3,9 @@ import { GetListCategoryListItemDto } from "../../services/catagory/dtos/getList
 import categoryService from "../../services/catagory/categoryService";
 import { CreateCategoryCommand } from "../../services/catagory/dtos/createCategoryCommand";
 import { CreatedCategoryResponse } from "../../services/catagory/dtos/createdCategoryResponse";
+import { BaseStore } from "../base/baseStore";
 
-export class CategoryStore {
+export class CategoryStore extends BaseStore {
   @observable categories: GetListCategoryListItemDto[] = [];
   @observable addedCategory: CreatedCategoryResponse =
     {} as CreatedCategoryResponse;
@@ -20,9 +21,23 @@ export class CategoryStore {
 
   @action
   createCategory = async (data: CreateCategoryCommand) => {
-    let result = await categoryService.createCategory(data);
-    this.addedCategory = result.data;
-    return result;
+    try {
+      let result = await categoryService.createCategory(data);
+      this.addedCategory = result.data;
+      return result;
+    } catch (error: any) {
+      if (error.status && error.generalMessage && error.validationErrors) {
+        this.setFormErrors(error);
+        console.log("Errors", this.formErrors);
+      } else {
+        this.setFormErrors({
+          generalMessage: "An unexpected error occurred.",
+          validationErrors: null,
+          status: error.status,
+        });
+      }
+      throw error;
+    }
   };
 }
 const categoryStore = new CategoryStore();
