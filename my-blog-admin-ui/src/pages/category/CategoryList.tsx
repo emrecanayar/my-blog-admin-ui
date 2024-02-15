@@ -26,16 +26,6 @@ const CategoryList = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchCategoriesData = async () => {
-      try {
-        await categoryStore.getCategories();
-        setCategoryItems(categoryStore.categories);
-      } catch (error) {
-        console.log("Category data not loaded", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchCategoriesData();
   }, []);
 
@@ -58,6 +48,17 @@ const CategoryList = observer(() => {
     },
   ];
 
+  const fetchCategoriesData = async () => {
+    try {
+      await categoryStore.getCategories();
+      setCategoryItems(categoryStore.categories);
+    } catch (error) {
+      console.log("Category data not loaded", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setCreateCategory({
@@ -66,9 +67,9 @@ const CategoryList = observer(() => {
     });
   };
 
-  const handleFileSelect = (event: any) => {
+  const handleFileSelect = async (event: any) => {
     const [file] = event.target.files;
-    handleFileSelectSend([file]);
+    await handleFileUpload(event);
     const fileNameLabel = document.getElementById("fileName");
     if (file) {
       if (fileNameLabel !== null) {
@@ -82,12 +83,16 @@ const CategoryList = observer(() => {
   };
 
   const handleSubmit = async (event: any) => {
-    event.preventDefault();
+    event?.preventDefault();
     try {
-      await categoryStore.createCategory(createCategory);
-    } catch (error: any) {
-      console.error("Category adding failed", error);
+      if (uploadedFileStore.uploadedFile === null) return null;
 
+      createCategory.tokens.push(uploadedFileStore.uploadedFile.token);
+      await categoryStore.createCategory(createCategory);
+      toast.success("Kategori başarıyla eklendi");
+      resetCategoryState();
+      await fetchCategoriesData();
+    } catch (error: any) {
       if (error.validationErrors) {
         error.validationErrors.forEach((valError: any) => {
           valError.Errors.forEach((errMsg: any) => {
@@ -100,12 +105,16 @@ const CategoryList = observer(() => {
     }
   };
 
-  const handleFileSelectSend = async (file: any) => {
+  const handleFileUpload = async (event: any) => {
+    event?.preventDefault();
     try {
-      await uploadedFileStore.uploadFile(file);
-    } catch (error: any) {
-      console.error("Category adding failed", error);
+      const file = event.target.files[0];
+      if (!file) return;
 
+      const formData = new FormData();
+      formData.append("file", file);
+      await uploadedFileStore.uploadFile(formData);
+    } catch (error: any) {
       if (error.validationErrors) {
         error.validationErrors.forEach((valError: any) => {
           valError.Errors.forEach((errMsg: any) => {
@@ -116,6 +125,15 @@ const CategoryList = observer(() => {
         toast.error(error.generalMessage);
       }
     }
+  };
+
+  const resetCategoryState = () => {
+    setCreateCategory({
+      name: "",
+      description: "",
+      isPopular: true,
+      tokens: [],
+    });
   };
 
   const ModalContent = (

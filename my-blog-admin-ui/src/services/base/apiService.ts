@@ -23,6 +23,7 @@ apiClient.interceptors.response.use(
       status: data.Status,
     };
 
+
     switch (data.Status) {
       case 400: // Validation veya Business Logic Error
         if (data.Errors) {
@@ -76,8 +77,12 @@ const apiService = {
   delete: (url: string) =>
     apiClient.delete(url).then((response) => response.data),
 
-  postFormData: (url: string, formData: FormData) =>
-    apiClient.post(url, formData).then((response) => response.data),
+    postFormData: (url: string, formData: FormData) =>
+    apiClient.post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then((response) => response.data),
 };
 
 export default apiService;

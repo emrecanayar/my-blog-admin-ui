@@ -8,7 +8,7 @@ export class UploadedFileStore extends BaseStore {
     {} as UploadedFileCreatedDto;
 
   @action
-  uploadFile = async (formData: any) => {
+  uploadFile = async (formData: FormData) => {
     try {
       let result = await uploadedFileService.uploadFile(formData);
       this.uploadedFile = result.data;
@@ -16,7 +16,6 @@ export class UploadedFileStore extends BaseStore {
     } catch (error: any) {
       if (error.status && error.generalMessage && error.validationErrors) {
         this.setFormErrors(error);
-        console.log("Errors", this.formErrors);
       } else {
         this.setFormErrors({
           generalMessage: "An unexpected error occurred.",

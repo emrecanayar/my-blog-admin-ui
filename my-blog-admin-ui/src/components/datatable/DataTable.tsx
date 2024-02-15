@@ -68,7 +68,10 @@ const DataTable = ({
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             title={modalTitle}
-            onSave={handleSubmit}
+            onSave={async () => {
+              await handleSubmit();
+              setIsModalOpen(false);
+            }}
           >
             {modalContent}
           </Modal>
