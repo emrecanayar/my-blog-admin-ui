@@ -1,16 +1,22 @@
 import styles from "./categoryList.module.css";
-import modalStyles from "../../components/modal/modal.module.css";
-import Sidebar from "../../components/sideBar/SideBar";
-import Navbar from "../../components/navbar/Navbar";
-import Datatable from "../../components/datatable/DataTable";
+import modalStyles from "../../../components/modal/modal.module.css";
+import Sidebar from "../../../components/sideBar/SideBar";
+import Navbar from "../../../components/navbar/Navbar";
+import Datatable from "../../../components/datatable/DataTable";
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
-import categoryStore from "../../stores/category/categoryStore";
-import { GetListCategoryListItemDto } from "../../services/catagory/dtos/getListCategoryListItemDto";
-import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import { CreateCategoryCommand } from "../../services/catagory/dtos/createCategoryCommand";
+import categoryStore from "../../../stores/category/categoryStore";
+import { GetListCategoryListItemDto } from "../../../services/catagory/dtos/getListCategoryListItemDto";
+import LoadingSpinner from "../../../components/loadingSpinner/LoadingSpinner";
+import { CreateCategoryCommand } from "../../../services/catagory/dtos/createCategoryCommand";
 import { ToastContainer, toast } from "react-toastify";
-import uploadedFileStore from "../../stores/uploadedFile/uploadedFileStore";
+import uploadedFileStore from "../../../stores/uploadedFile/uploadedFileStore";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import CategoryDetail from "../detail/CategoryDetail";
+import Swal from "sweetalert2";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -23,6 +29,10 @@ const CategoryList = observer(() => {
     isPopular: true,
     tokens: [],
   });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Modal açık/kapalı durumu
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  ); // Seçilen kategori ID'si
 
   useEffect(() => {
     setIsLoading(true);
@@ -46,7 +56,73 @@ const CategoryList = observer(() => {
       header: "Popüler mi?",
       accessorKey: "isPopular",
     },
+    {
+      header: "İşlemler",
+      accessorKey: "actions",
+      cell: (row: any) => renderActionButtons(row),
+    },
   ];
+
+  const renderActionButtons = (row: any) => {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+        <IconButton
+          onClick={() => handleDetailView(row.row.original)}
+          style={{ backgroundColor: "#1976d2", color: "white" }}
+        >
+          <VisibilityIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => handleEditView(row.row.original)}
+          style={{ backgroundColor: "orange", color: "white" }}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => handleDelete(row.row.original)}
+          style={{ backgroundColor: "#d32f2f", color: "white" }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </div>
+    );
+  };
+
+  const showSweetAlert = async (categoryId: string) => {
+    const result = await Swal.fire({
+      title: "Emin misin?",
+      text: "Bunu geri döndüremezsiniz!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "İptal",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Evet, bunu sil!",
+    });
+
+    if (result.isConfirmed) {
+      await categoryStore.deleteCategory(categoryId);
+      await fetchCategoriesData();
+      Swal.fire({
+        title: "Silindi!",
+        text: "Kaydınız silindi.",
+        icon: "success",
+      });
+    }
+  };
+
+  const handleDetailView = (category: any) => {
+    setSelectedCategoryId(category.id);
+    setIsModalOpen(true);
+  };
+  const handleEditView = (category: any) => {
+    // Implement the edit logic here
+    console.log("Edit View for: ", category);
+  };
+
+  const handleDelete = async (category: any) => {
+    showSweetAlert(category.id);
+  };
 
   const fetchCategoriesData = async () => {
     try {
@@ -211,6 +287,12 @@ const CategoryList = observer(() => {
           />
         )}
       </div>
+      {isModalOpen && selectedCategoryId && (
+        <CategoryDetail
+          categoryId={selectedCategoryId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       <ToastContainer
         position="top-right"
         autoClose={5000}

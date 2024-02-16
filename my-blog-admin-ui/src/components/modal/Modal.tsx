@@ -3,12 +3,20 @@ import styles from "./modal.module.css";
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: () => void;
+  onSave?: () => void;
   children: React.ReactNode;
   title: string;
+  isVisibleSaveButton?: boolean;
 }
 
-const Modal = ({ isOpen, onClose, onSave, children, title }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  onSave,
+  children,
+  title,
+  isVisibleSaveButton,
+}: ModalProps) => {
   if (!isOpen) return null;
   return (
     <div className={styles.modalBackdrop} onClick={onClose}>
@@ -29,10 +37,11 @@ const Modal = ({ isOpen, onClose, onSave, children, title }: ModalProps) => {
         <div style={{ margin: "15px" }}>{children}</div>
         <hr />
         <div className={styles.modalFooter}>
-          {/* Footer kısmı eklendi */}
-          <button className={styles.saveButton} onClick={onSave}>
-            Kaydet
-          </button>
+          {isVisibleSaveButton && isVisibleSaveButton === true && (
+            <button className={styles.saveButton} onClick={onSave}>
+              Kaydet
+            </button>
+          )}
           <button className={styles.closeButton} onClick={onClose}>
             Kapat
           </button>

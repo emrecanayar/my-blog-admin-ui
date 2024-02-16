@@ -7,7 +7,7 @@ import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { DarkModeContext } from "./context/darkModeContext";
 import "react-toastify/dist/ReactToastify.css";
-import CategoryList from "./pages/category/CategoryList";
+import CategoryList from "./pages/category/list/CategoryList";
 
 type Input = {
   id: string;

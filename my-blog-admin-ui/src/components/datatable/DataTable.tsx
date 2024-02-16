@@ -72,6 +72,7 @@ const DataTable = ({
               await handleSubmit();
               setIsModalOpen(false);
             }}
+            isVisibleSaveButton={true}
           >
             {modalContent}
           </Modal>
