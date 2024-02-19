@@ -11,6 +11,8 @@ import {
 
 import styles from "./dataTable.module.css";
 import Modal from "../modal/Modal";
+import { IconButton, Tooltip } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 export interface DataTableProps {
   data: any;
@@ -58,12 +60,15 @@ const DataTable = ({
             placeholder="Ara..."
             onChange={(e) => setFiltering(e.target.value)}
           />
-          <button
-            className={styles.addButton}
-            onClick={() => setIsModalOpen(true)}
-          >
-            Ekle
-          </button>
+          <Tooltip title="Ekle">
+            <IconButton
+              onClick={() => setIsModalOpen(true)}
+              style={{ backgroundColor: "green", color: "white" }}
+              size="small"
+            >
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
           <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}

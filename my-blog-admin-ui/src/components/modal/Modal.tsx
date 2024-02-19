@@ -7,6 +7,7 @@ export interface ModalProps {
   children: React.ReactNode;
   title: string;
   isVisibleSaveButton?: boolean;
+  isVisibleUpdateButton?: boolean;
 }
 
 const Modal = ({
@@ -16,6 +17,7 @@ const Modal = ({
   children,
   title,
   isVisibleSaveButton,
+  isVisibleUpdateButton
 }: ModalProps) => {
   if (!isOpen) return null;
   return (
@@ -40,6 +42,11 @@ const Modal = ({
           {isVisibleSaveButton && isVisibleSaveButton === true && (
             <button className={styles.saveButton} onClick={onSave}>
               Kaydet
+            </button>
+          )}
+          {isVisibleUpdateButton && isVisibleUpdateButton === true && (
+            <button className={styles.updateButton} onClick={onSave}>
+              Güncelle
             </button>
           )}
           <button className={styles.closeButton} onClick={onClose}>

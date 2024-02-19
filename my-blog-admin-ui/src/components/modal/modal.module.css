@@ -33,21 +33,27 @@
 
 .closeIcon {
   position: absolute;
-  top: 10px; /* Adjust the value to move the close icon up or down */
-  right: 10px; /* Adjust the value to move the close icon left or right */
+  top: 10px;
+  /* Adjust the value to move the close icon up or down */
+  right: 10px;
+  /* Adjust the value to move the close icon left or right */
   background: transparent;
   border: none;
-  font-size: 24px; /* This sets the size of the '×' character */
+  font-size: 24px;
+  /* This sets the size of the '×' character */
   cursor: pointer;
   line-height: 1;
-  color: #bbb; /* Light grey color, can change as needed */
+  color: #bbb;
+  /* Light grey color, can change as needed */
   font-weight: bold;
 }
 
 .closeIcon:hover,
 .closeIcon:focus {
-  color: #999; /* Darker grey on hover/focus for better user experience */
-  text-decoration: none; /* Removes underline text on hover/focus */
+  color: #999;
+  /* Darker grey on hover/focus for better user experience */
+  text-decoration: none;
+  /* Removes underline text on hover/focus */
 }
 
 /* Ensure that the close icon is keyboard accessible for accessibility reasons */
@@ -67,17 +73,21 @@
 }
 
 .formGroup {
-  flex: 1; /* Her bir form grubu eşit genişlikte olacak */
-  margin-right: 10px; /* Gruplar arası boşluk */
+  flex: 1;
+  /* Her bir form grubu eşit genişlikte olacak */
+  margin-right: 10px;
+  /* Gruplar arası boşluk */
 }
 
 .formGroup:last-child {
-  margin-right: 0; /* Son grup için sağ boşluk kaldırılıyor */
+  margin-right: 0;
+  /* Son grup için sağ boşluk kaldırılıyor */
 }
 
 .formGroup.checkboxGroup {
   display: flex;
-  align-items: center; /* Checkbox ve label'ı dikey olarak ortala */
+  align-items: center;
+  /* Checkbox ve label'ı dikey olarak ortala */
 }
 
 .formGroup label {
@@ -140,37 +150,70 @@
 
 .modalFooter {
   display: flex;
-  justify-content: flex-end; /* Butonları sağa yaslar */
-  padding: 1rem; /* İsteğe bağlı padding */
+  justify-content: flex-end;
+  /* Butonları sağa yaslar */
+  padding: 1rem;
+  /* İsteğe bağlı padding */
 }
 
 .saveButton {
-  background-color: #28a745 !important; /* Yeşil arka plan */
-  color: white; /* Beyaz yazı */
+  background-color: #28a745 !important;
+  /* Yeşil arka plan */
+  color: white;
+  /* Beyaz yazı */
   border: none;
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem; /* Sağdaki butondan boşluk */
+  margin-right: 0.5rem;
+  /* Sağdaki butondan boşluk */
   cursor: pointer;
-  border-radius: 0.25rem; /* Hafif yuvarlak köşeler */
+  border-radius: 0.25rem;
+  /* Hafif yuvarlak köşeler */
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .saveButton:hover {
-  background-color: #218838 !important;  /* Hover durumunda daha koyu yeşil */
+  background-color: #218838 !important;
+  /* Hover durumunda daha koyu yeşil */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.updateButton {
+  background-color: orange !important;
+  /* Yeşil arka plan */
+  color: white;
+  /* Beyaz yazı */
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  /* Sağdaki butondan boşluk */
+  cursor: pointer;
+  border-radius: 0.25rem;
+  /* Hafif yuvarlak köşeler */
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.updateButton:hover {
+  background-color: darkorange !important;
+  /* Hover durumunda daha koyu yeşil */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
 .closeButton {
-  background-color: #6c757d !important; /* Gri arka plan */
-  color: white; /* Beyaz yazı */
+  background-color: #6c757d !important;
+  /* Gri arka plan */
+  color: white;
+  /* Beyaz yazı */
   border: none;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  border-radius: 0.25rem; /* Hafif yuvarlak köşeler */
+  border-radius: 0.25rem;
+  /* Hafif yuvarlak köşeler */
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .closeButton:hover {
-  background-color: #5a6268 !important; /* Hover durumunda daha koyu gri */
+  background-color: #5a6268 !important;
+  /* Hover durumunda daha koyu gri */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

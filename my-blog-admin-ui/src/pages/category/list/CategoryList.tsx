@@ -17,6 +17,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import CategoryDetail from "../detail/CategoryDetail";
 import Swal from "sweetalert2";
+import CategoryUpdate from "../update/CategoryUpdate";
+import { Tooltip } from "@mui/material";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -29,10 +31,14 @@ const CategoryList = observer(() => {
     isPopular: true,
     tokens: [],
   });
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Modal açık/kapalı durumu
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null
-  ); // Seçilen kategori ID'si
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState<boolean>(false);
+  const [selectedCategoryDetailId, setSelectedCategoryDetailId] = useState<
+    string | null
+  >(null);
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
+  const [selectedCategoryUpdateId, setSelectedCategoryUpdateId] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -66,24 +72,33 @@ const CategoryList = observer(() => {
   const renderActionButtons = (row: any) => {
     return (
       <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-        <IconButton
-          onClick={() => handleDetailView(row.row.original)}
-          style={{ backgroundColor: "#1976d2", color: "white" }}
-        >
-          <VisibilityIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => handleEditView(row.row.original)}
-          style={{ backgroundColor: "orange", color: "white" }}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => handleDelete(row.row.original)}
-          style={{ backgroundColor: "#d32f2f", color: "white" }}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <Tooltip title="Detayları Görüntüle">
+          <IconButton
+            onClick={() => handleDetailView(row.row.original)}
+            style={{ backgroundColor: "#1976d2", color: "white" }}
+            size="small"
+          >
+            <VisibilityIcon style={{ fontSize: "20px" }} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Güncelle">
+          <IconButton
+            onClick={() => handleEditView(row.row.original)}
+            style={{ backgroundColor: "orange", color: "white" }}
+            size="small"
+          >
+            <EditIcon style={{ fontSize: "20px" }} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Sil">
+          <IconButton
+            onClick={() => handleDelete(row.row.original)}
+            style={{ backgroundColor: "#d32f2f", color: "white" }}
+            size="small"
+          >
+            <DeleteIcon style={{ fontSize: "20px" }} />
+          </IconButton>
+        </Tooltip>
       </div>
     );
   };
@@ -112,12 +127,12 @@ const CategoryList = observer(() => {
   };
 
   const handleDetailView = (category: any) => {
-    setSelectedCategoryId(category.id);
-    setIsModalOpen(true);
+    setSelectedCategoryDetailId(category.id);
+    setIsModalDetailOpen(true);
   };
   const handleEditView = (category: any) => {
-    // Implement the edit logic here
-    console.log("Edit View for: ", category);
+    setSelectedCategoryUpdateId(category.id);
+    setIsModalUpdateOpen(true);
   };
 
   const handleDelete = async (category: any) => {
@@ -287,10 +302,16 @@ const CategoryList = observer(() => {
           />
         )}
       </div>
-      {isModalOpen && selectedCategoryId && (
+      {isModalDetailOpen && selectedCategoryDetailId && (
         <CategoryDetail
-          categoryId={selectedCategoryId}
-          onClose={() => setIsModalOpen(false)}
+          categoryId={selectedCategoryDetailId}
+          onClose={() => setIsModalDetailOpen(false)}
+        />
+      )}
+      {isModalUpdateOpen && selectedCategoryUpdateId && (
+        <CategoryUpdate
+          categoryId={selectedCategoryUpdateId}
+          onClose={() => setIsModalUpdateOpen(false)}
         />
       )}
       <ToastContainer
