@@ -51,6 +51,19 @@ const CategoryList = observer(() => {
       accessorKey: "id",
     },
     {
+      header: "Görsel",
+      accessorKey: "categoryUploadedFiles[0].newPath",
+      cell: (row: any) => {
+        const files = row.row.original.categoryUploadedFiles;
+        const imageUrl = files && files.length > 0 ? `https://localhost:7265/${files[0].newPath}`: "";
+        return imageUrl ? (
+          <img src={imageUrl} alt="Kategori Görseli" style={{ width: "100px", height: "auto" }} />
+        ) : (
+          <span>Görsel Yok</span>
+        );
+      }
+    },
+    {
       header: "Adı",
       accessorKey: "name",
     },
@@ -151,11 +164,14 @@ const CategoryList = observer(() => {
   };
 
   const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setCreateCategory({
-      ...createCategory,
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    setCreateCategory((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
   const handleFileSelect = async (event: any) => {

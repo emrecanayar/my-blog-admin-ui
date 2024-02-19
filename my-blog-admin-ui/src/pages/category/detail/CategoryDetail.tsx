@@ -67,7 +67,7 @@ const CategoryDetail = ({ categoryId, onClose }: CategoryDetailProps) => {
           <div
             className={`${modalStyles.formGroup} ${modalStyles.checkboxGroup}`}
           >
-            <input type="checkbox" id="isPopular" name="isPopuler" disabled />
+            <input type="checkbox" id="isPopular" name="isPopuler" checked={category.isPopular} disabled />
             <label htmlFor="isPopular">Popüler mi?</label>
           </div>
         </div>

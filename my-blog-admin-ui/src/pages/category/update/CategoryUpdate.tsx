@@ -117,6 +117,7 @@ const CategoryUpdate = ({ categoryId, onClose }: CategoryUpdateProps) => {
             id="isPopular"
             name="isPopuler"
             onChange={handleInputChange}
+            checked={category.isPopular}
           />
           <label htmlFor="isPopular">Popüler mi?</label>
         </div>

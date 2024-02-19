@@ -21,6 +21,7 @@ export class CategoryStore extends BaseStore {
     runInAction(() => {
       this.categories = result.data.items;
     });
+    console.log("Categories", this.categories);
     return result;
   };
 
