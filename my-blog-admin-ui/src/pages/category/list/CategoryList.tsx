@@ -55,25 +55,38 @@ const CategoryList = observer(() => {
       accessorKey: "categoryUploadedFiles[0].newPath",
       cell: (row: any) => {
         const files = row.row.original.categoryUploadedFiles;
-        const imageUrl = files && files.length > 0 ? `https://localhost:7265/${files[0].newPath}`: "";
+        const imageUrl =
+          files && files.length > 0
+            ? `https://localhost:7265/${files[0].newPath}`
+            : "";
         return imageUrl ? (
-          <img src={imageUrl} alt="Kategori Görseli" style={{ width: "100px", height: "auto" }} />
+          <img
+            src={imageUrl}
+            alt="Kategori Görseli"
+            style={{ width: "100px", height: "auto" }}
+          />
         ) : (
           <span>Görsel Yok</span>
         );
-      }
+      },
     },
     {
       header: "Adı",
       accessorKey: "name",
+      enableSorting: true,
     },
     {
       header: "Açıklama",
       accessorKey: "description",
+      enableSorting: true,
     },
     {
       header: "Popüler mi?",
       accessorKey: "isPopular",
+      cell: (row: any) => {
+        const isPopular = row.row.original.isPopular;
+        return isPopular === true ? <span>Evet</span> : <span>Hayır</span>;
+      },
     },
     {
       header: "İşlemler",
@@ -161,6 +174,12 @@ const CategoryList = observer(() => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const refreshCategories = async () => {
+    setIsLoading(true);
+    await fetchCategoriesData();
+    setIsLoading(false);
   };
 
   const handleInputChange = (e: any) => {
@@ -328,6 +347,7 @@ const CategoryList = observer(() => {
         <CategoryUpdate
           categoryId={selectedCategoryUpdateId}
           onClose={() => setIsModalUpdateOpen(false)}
+          onUpdated={refreshCategories}
         />
       )}
       <ToastContainer

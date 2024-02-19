@@ -7,12 +7,18 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  ColumnSort, 
+  SortingState, 
+  OnChangeFn 
 } from "@tanstack/react-table";
 
 import styles from "./dataTable.module.css";
 import Modal from "../modal/Modal";
 import { IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 
 export interface DataTableProps {
   data: any;
@@ -43,9 +49,10 @@ const DataTable = ({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
-      sorting: sorting,
+      sorting, // doğru tipi burada kullanın
       globalFilter: filtering,
     },
+    onSortingChange: setSorting as OnChangeFn<SortingState>, // Tip dönüşümü
     onGlobalFilterChange: setFiltering,
   });
 
@@ -92,13 +99,20 @@ const DataTable = ({
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     {header.isPlaceholder ? null : (
-                      <div>
+                      <div style={{ display: "flex", alignItems: "center" }}>
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        {/* Sıralama ikonlarını burada kontrol edip gösteriyoruz */}
-                        {}
+                        {header.column.getIsSorted() ? (
+                          header.column.getIsSorted() === "desc" ? (
+                            <ArrowDownwardIcon />
+                          ) : (
+                            <ArrowUpwardIcon />
+                          )
+                        ) : (
+                          <UnfoldMoreIcon />
+                        )}
                       </div>
                     )}
                   </th>

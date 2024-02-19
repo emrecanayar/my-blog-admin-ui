@@ -6,11 +6,15 @@ import { CreatedCategoryResponse } from "../../services/catagory/dtos/createdCat
 import { BaseStore } from "../base/baseStore";
 import { GetByIdCategoryResponse } from "../../services/catagory/dtos/getByIdCategoryResponse";
 import { DeletedCategoryResponse } from "../../services/catagory/dtos/deletedCategoryResponse";
+import { UpdateCategoryCommand } from "../../services/catagory/dtos/updateCategoryCommand";
+import { UpdatedCategoryResponse } from "../../services/catagory/dtos/updatedCategoryResponse";
 
 export class CategoryStore extends BaseStore {
   @observable categories: GetListCategoryListItemDto[] = [];
   @observable addedCategory: CreatedCategoryResponse =
     {} as CreatedCategoryResponse;
+  @observable updatedCategory: UpdatedCategoryResponse =
+    {} as UpdatedCategoryResponse;
   @observable category: GetByIdCategoryResponse = {} as GetByIdCategoryResponse;
   @observable deletedCategory: DeletedCategoryResponse =
     {} as DeletedCategoryResponse;
@@ -21,7 +25,6 @@ export class CategoryStore extends BaseStore {
     runInAction(() => {
       this.categories = result.data.items;
     });
-    console.log("Categories", this.categories);
     return result;
   };
 
@@ -30,6 +33,27 @@ export class CategoryStore extends BaseStore {
     try {
       let result = await categoryService.createCategory(data);
       this.addedCategory = result.data;
+      return result;
+    } catch (error: any) {
+      if (error.status && error.generalMessage && error.validationErrors) {
+        this.setFormErrors(error);
+        console.log("Errors", this.formErrors);
+      } else {
+        this.setFormErrors({
+          generalMessage: "An unexpected error occurred.",
+          validationErrors: null,
+          status: error.status,
+        });
+      }
+      throw error;
+    }
+  };
+
+  @action
+  updateCategory = async (data: UpdateCategoryCommand) => {
+    try {
+      let result = await categoryService.updateCategory(data);
+      this.updatedCategory = result.data;
       return result;
     } catch (error: any) {
       if (error.status && error.generalMessage && error.validationErrors) {

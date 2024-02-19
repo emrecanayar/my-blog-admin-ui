@@ -6,6 +6,8 @@ import { CreatedCategoryResponse } from "./dtos/createdCategoryResponse";
 import { DeletedCategoryResponse } from "./dtos/deletedCategoryResponse";
 import { GetByIdCategoryResponse } from "./dtos/getByIdCategoryResponse";
 import { GetListCategoryListItemDto } from "./dtos/getListCategoryListItemDto";
+import { UpdateCategoryCommand } from "./dtos/updateCategoryCommand";
+import { UpdatedCategoryResponse } from "./dtos/updatedCategoryResponse";
 
 class CategoryService {
   getCategories = async (): Promise<
@@ -28,6 +30,21 @@ class CategoryService {
       return response;
     } catch (error) {
       console.log("Categories eklenirken bir hata oluştu", error);
+      throw error;
+    }
+  };
+
+  updateCategory = async (
+    updateCategoryCommand: UpdateCategoryCommand
+  ): Promise<CustomResponseDto<UpdatedCategoryResponse>> => {
+    try {
+      const response = await apiService.put(
+        "/Categories",
+        updateCategoryCommand
+      );
+      return response;
+    } catch (error) {
+      console.log("Kategori günceleme işlemi sırasında bir hata oluştu", error);
       throw error;
     }
   };
@@ -55,6 +72,8 @@ class CategoryService {
       throw error;
     }
   };
+
+
 }
 const categoryService = new CategoryService();
 export default categoryService;
