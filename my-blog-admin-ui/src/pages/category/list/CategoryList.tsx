@@ -11,14 +11,12 @@ import LoadingSpinner from "../../../components/loadingSpinner/LoadingSpinner";
 import { CreateCategoryCommand } from "../../../services/catagory/dtos/createCategoryCommand";
 import { ToastContainer, toast } from "react-toastify";
 import uploadedFileStore from "../../../stores/uploadedFile/uploadedFileStore";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 import CategoryDetail from "../detail/CategoryDetail";
 import Swal from "sweetalert2";
 import CategoryUpdate from "../update/CategoryUpdate";
-import { Tooltip } from "@mui/material";
+import { handleApiError } from "../../../helpers/errorHelpers";
+import useFileUpload from "../../../hooks/useFileUpload";
+import CategoryActionButtons from "../components/CategoryActionButtons";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -40,8 +38,9 @@ const CategoryList = observer(() => {
     string | null
   >(null);
 
+  const { fileName, handleFileSelect } = useFileUpload();
+
   useEffect(() => {
-    setIsLoading(true);
     fetchCategoriesData();
   }, []);
 
@@ -91,41 +90,18 @@ const CategoryList = observer(() => {
     {
       header: "İşlemler",
       accessorKey: "actions",
-      cell: (row: any) => renderActionButtons(row),
+      cell: (row: any) => renderActionButtons(row.row.original),
     },
   ];
 
-  const renderActionButtons = (row: any) => {
+  const renderActionButtons = (category: any) => {
     return (
-      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-        <Tooltip title="Detayları Görüntüle">
-          <IconButton
-            onClick={() => handleDetailView(row.row.original)}
-            style={{ backgroundColor: "#1976d2", color: "white" }}
-            size="small"
-          >
-            <VisibilityIcon style={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Güncelle">
-          <IconButton
-            onClick={() => handleEditView(row.row.original)}
-            style={{ backgroundColor: "orange", color: "white" }}
-            size="small"
-          >
-            <EditIcon style={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Sil">
-          <IconButton
-            onClick={() => handleDelete(row.row.original)}
-            style={{ backgroundColor: "#d32f2f", color: "white" }}
-            size="small"
-          >
-            <DeleteIcon style={{ fontSize: "20px" }} />
-          </IconButton>
-        </Tooltip>
-      </div>
+      <CategoryActionButtons
+        category={category}
+        onDetail={handleDetailView}
+        onEdit={handleEditView}
+        onDelete={handleDelete}
+      />
     );
   };
 
@@ -156,6 +132,7 @@ const CategoryList = observer(() => {
     setSelectedCategoryDetailId(category.id);
     setIsModalDetailOpen(true);
   };
+
   const handleEditView = (category: any) => {
     setSelectedCategoryUpdateId(category.id);
     setIsModalUpdateOpen(true);
@@ -166,11 +143,12 @@ const CategoryList = observer(() => {
   };
 
   const fetchCategoriesData = async () => {
+    setIsLoading(true);
     try {
       await categoryStore.getCategories();
       setCategoryItems(categoryStore.categories);
     } catch (error) {
-      console.log("Category data not loaded", error);
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }
@@ -193,21 +171,6 @@ const CategoryList = observer(() => {
     }));
   };
 
-  const handleFileSelect = async (event: any) => {
-    const [file] = event.target.files;
-    await handleFileUpload(event);
-    const fileNameLabel = document.getElementById("fileName");
-    if (file) {
-      if (fileNameLabel !== null) {
-        fileNameLabel.textContent = file.name;
-      }
-    } else {
-      if (fileNameLabel !== null) {
-        fileNameLabel.textContent = "Dosya Seçilmedi";
-      }
-    }
-  };
-
   const handleSubmit = async (event: any) => {
     event?.preventDefault();
     try {
@@ -219,37 +182,7 @@ const CategoryList = observer(() => {
       resetCategoryState();
       await fetchCategoriesData();
     } catch (error: any) {
-      if (error.validationErrors) {
-        error.validationErrors.forEach((valError: any) => {
-          valError.Errors.forEach((errMsg: any) => {
-            toast.warning(errMsg);
-          });
-        });
-      } else if (error.generalMessage && error.validationErrors === null) {
-        toast.error(error.generalMessage);
-      }
-    }
-  };
-
-  const handleFileUpload = async (event: any) => {
-    event?.preventDefault();
-    try {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const formData = new FormData();
-      formData.append("file", file);
-      await uploadedFileStore.uploadFile(formData);
-    } catch (error: any) {
-      if (error.validationErrors) {
-        error.validationErrors.forEach((valError: any) => {
-          valError.Errors.forEach((errMsg: any) => {
-            toast.warning(errMsg);
-          });
-        });
-      } else if (error.generalMessage && error.validationErrors === null) {
-        toast.error(error.generalMessage);
-      }
+      handleApiError(error);
     }
   };
 
@@ -298,7 +231,7 @@ const CategoryList = observer(() => {
             Dosya Seç...
           </label>
           <span id="fileName" className={modalStyles.fileName}>
-            Dosya seçilmedi.
+            {fileName ? fileName : "Dosya seçilmedi."}
           </span>
         </div>
         <div
@@ -307,7 +240,7 @@ const CategoryList = observer(() => {
           <input
             type="checkbox"
             id="isPopular"
-            name="isPopuler"
+            name="isPopular"
             onChange={handleInputChange}
             value={createCategory.isPopular.toString()}
           />

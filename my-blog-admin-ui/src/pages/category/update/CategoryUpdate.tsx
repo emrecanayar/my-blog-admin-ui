@@ -8,6 +8,8 @@ import categoryStore from "../../../stores/category/categoryStore";
 import { GetByIdCategoryResponse } from "../../../services/catagory/dtos/getByIdCategoryResponse";
 import uploadedFileStore from "../../../stores/uploadedFile/uploadedFileStore";
 import { observer } from "mobx-react";
+import useFileUpload from "../../../hooks/useFileUpload";
+import { handleApiError } from "../../../helpers/errorHelpers";
 
 export interface CategoryUpdateProps {
   categoryId: string;
@@ -24,46 +26,11 @@ const CategoryUpdate = observer(
       {} as UpdateCategoryCommand
     );
 
+    const { fileName, handleFileSelect } = useFileUpload();
+
     useEffect(() => {
       getCategoryById(categoryId);
     }, [categoryId]);
-
-    const handleFileSelect = async (event: any) => {
-      const [file] = event.target.files;
-      await handleFileUpload(event);
-      const fileNameLabel = document.getElementById("fileName");
-      if (file) {
-        if (fileNameLabel !== null) {
-          fileNameLabel.textContent = file.name;
-        }
-      } else {
-        if (fileNameLabel !== null) {
-          fileNameLabel.textContent = "Dosya Seçilmedi";
-        }
-      }
-    };
-
-    const handleFileUpload = async (event: any) => {
-      event?.preventDefault();
-      try {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-        await uploadedFileStore.uploadFile(formData);
-      } catch (error: any) {
-        if (error.validationErrors) {
-          error.validationErrors.forEach((valError: any) => {
-            valError.Errors.forEach((errMsg: any) => {
-              toast.warning(errMsg);
-            });
-          });
-        } else if (error.generalMessage && error.validationErrors === null) {
-          toast.error(error.generalMessage);
-        }
-      }
-    };
 
     const handleSubmit = async (event?: any) => {
       event?.preventDefault();
@@ -80,15 +47,7 @@ const CategoryUpdate = observer(
         toast.success("Kategori güncellendi.");
         onUpdated();
       } catch (error: any) {
-        if (error.validationErrors) {
-          error.validationErrors.forEach((valError: any) => {
-            valError.Errors.forEach((errMsg: any) => {
-              toast.warning(errMsg);
-            });
-          });
-        } else if (error.generalMessage && error.validationErrors === null) {
-          toast.error(error.generalMessage);
-        }
+        handleApiError(error);
       }
     };
 
@@ -174,7 +133,7 @@ const CategoryUpdate = observer(
               Dosya Seç...
             </label>
             <span id="fileName" className={modalStyles.fileName}>
-              Dosya seçilmedi.
+              {fileName || "Dosya Seçilmedi"}
             </span>
           </div>
           <div
