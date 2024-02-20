@@ -23,6 +23,7 @@ const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
     GetListCategoryListItemDto[]
   >([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [createCategory, setCreateCategory] = useState<CreateCategoryCommand>({
     name: "",
@@ -55,7 +56,9 @@ const CategoryList = observer(() => {
       cell: (row: any) => {
         const files = row.row.original.categoryUploadedFiles;
         const imageUrl =
-          files && files.length > 0 ? `${config.FILE_BASE_URL}${files[0].newPath}` : "";
+          files && files.length > 0
+            ? `${config.FILE_BASE_URL}${files[0].newPath}`
+            : "";
         return imageUrl ? (
           <img
             src={imageUrl}

@@ -8,6 +8,9 @@ import { GetByIdCategoryResponse } from "../../services/catagory/dtos/getByIdCat
 import { DeletedCategoryResponse } from "../../services/catagory/dtos/deletedCategoryResponse";
 import { UpdateCategoryCommand } from "../../services/catagory/dtos/updateCategoryCommand";
 import { UpdatedCategoryResponse } from "../../services/catagory/dtos/updatedCategoryResponse";
+import { PageRequest } from "../../services/base/models/PageRequest";
+import { DynamicQuery } from "../../services/base/models/DynamicQuery";
+import { CategoryListModel } from "../../services/catagory/dtos/categoryListModel";
 
 export class CategoryStore extends BaseStore {
   @observable categories: GetListCategoryListItemDto[] = [];
@@ -18,6 +21,8 @@ export class CategoryStore extends BaseStore {
   @observable category: GetByIdCategoryResponse = {} as GetByIdCategoryResponse;
   @observable deletedCategory: DeletedCategoryResponse =
     {} as DeletedCategoryResponse;
+  @observable categoriesListByDynamic: CategoryListModel =
+    {} as CategoryListModel;
 
   @action
   getCategories = async () => {
@@ -70,6 +75,24 @@ export class CategoryStore extends BaseStore {
       let result = await categoryService.deleteCategory(id);
       this.deletedCategory = result.data;
       return result;
+    } catch (error: any) {
+      this.handleApiError(error);
+      throw error;
+    }
+  };
+
+  @action
+  getCategoriesListByDynamic = async (
+    pageRequest: PageRequest,
+    dynamicQuery: DynamicQuery
+  ) => {
+    try {
+      let result = await categoryService.getCategoriesListByDynamic(
+        pageRequest,
+        dynamicQuery
+      );
+      this.categoriesListByDynamic = result.data;
+      return result.data;
     } catch (error: any) {
       this.handleApiError(error);
       throw error;
