@@ -35,16 +35,7 @@ export class CategoryStore extends BaseStore {
       this.addedCategory = result.data;
       return result;
     } catch (error: any) {
-      if (error.status && error.generalMessage && error.validationErrors) {
-        this.setFormErrors(error);
-        console.log("Errors", this.formErrors);
-      } else {
-        this.setFormErrors({
-          generalMessage: "An unexpected error occurred.",
-          validationErrors: null,
-          status: error.status,
-        });
-      }
+      this.handleApiError(error);
       throw error;
     }
   };
@@ -56,16 +47,7 @@ export class CategoryStore extends BaseStore {
       this.updatedCategory = result.data;
       return result;
     } catch (error: any) {
-      if (error.status && error.generalMessage && error.validationErrors) {
-        this.setFormErrors(error);
-        console.log("Errors", this.formErrors);
-      } else {
-        this.setFormErrors({
-          generalMessage: "An unexpected error occurred.",
-          validationErrors: null,
-          status: error.status,
-        });
-      }
+      this.handleApiError(error);
       throw error;
     }
   };
@@ -77,16 +59,7 @@ export class CategoryStore extends BaseStore {
       this.category = result.data;
       return result;
     } catch (error: any) {
-      if (error.status && error.generalMessage && error.validationErrors) {
-        this.setFormErrors(error);
-        console.log("Errors", this.formErrors);
-      } else {
-        this.setFormErrors({
-          generalMessage: "An unexpected error occurred.",
-          validationErrors: null,
-          status: error.status,
-        });
-      }
+      this.handleApiError(error);
       throw error;
     }
   };
@@ -98,16 +71,7 @@ export class CategoryStore extends BaseStore {
       this.deletedCategory = result.data;
       return result;
     } catch (error: any) {
-      if (error.status && error.generalMessage && error.validationErrors) {
-        this.setFormErrors(error);
-        console.log("Errors", this.formErrors);
-      } else {
-        this.setFormErrors({
-          generalMessage: "An unexpected error occurred.",
-          validationErrors: null,
-          status: error.status,
-        });
-      }
+      this.handleApiError(error);
       throw error;
     }
   };

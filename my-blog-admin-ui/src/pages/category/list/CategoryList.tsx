@@ -17,6 +17,7 @@ import CategoryUpdate from "../update/CategoryUpdate";
 import { handleApiError } from "../../../helpers/errorHelpers";
 import useFileUpload from "../../../hooks/useFileUpload";
 import CategoryActionButtons from "../components/CategoryActionButtons";
+import config from "../../../config";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -39,7 +40,6 @@ const CategoryList = observer(() => {
   >(null);
 
   const { fileName, handleFileSelect } = useFileUpload();
-
   useEffect(() => {
     fetchCategoriesData();
   }, []);
@@ -55,9 +55,7 @@ const CategoryList = observer(() => {
       cell: (row: any) => {
         const files = row.row.original.categoryUploadedFiles;
         const imageUrl =
-          files && files.length > 0
-            ? `https://localhost:7265/${files[0].newPath}`
-            : "";
+          files && files.length > 0 ? `${config.FILE_BASE_URL}${files[0].newPath}` : "";
         return imageUrl ? (
           <img
             src={imageUrl}
