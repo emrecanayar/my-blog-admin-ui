@@ -12,16 +12,10 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { DarkModeContext } from "../../context/darkModeContext";
+
 
 const SideBar = () => {
 
-    const context = useContext(DarkModeContext);
-    if (!context) {
-      throw new Error('useContext(DarkModeContext) must be inside a DarkModeProvider with a value');
-    }
-    const { dispatch } = context;
 return(
     <div className={styles.sidebar}>
     <div className={styles.top}>
@@ -90,16 +84,6 @@ return(
           <span>Logout</span>
         </li>
       </ul>
-    </div>
-    <div className={styles.bottom}>
-      <div
-        className={styles.colorOption}
-        onClick={() => dispatch({ type: "LIGHT" })}
-      ></div>
-      <div
-        className={styles.colorOption}
-        onClick={() => dispatch({ type: "DARK" })}
-      ></div>
     </div>
   </div>
 )

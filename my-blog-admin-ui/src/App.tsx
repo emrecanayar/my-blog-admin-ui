@@ -5,7 +5,6 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
-import { DarkModeContext } from "./context/darkModeContext";
 import "react-toastify/dist/ReactToastify.css";
 import CategoryList from "./pages/category/list/CategoryList";
 
@@ -20,18 +19,9 @@ const userInputs: Input[] = []; // Örnek veri yapısını tanımlayın
 const productInputs: Input[] = []; // Örnek veri yapısını tanımlayın
 
 function App() {
-  const context = useContext(DarkModeContext);
-  if (!context) {
-    throw new Error(
-      "useContext(DarkModeContext) must be inside a DarkModeProvider with a value"
-    );
-  }
-
-  const { state } = context;
-  const { darkMode } = state;
 
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/">

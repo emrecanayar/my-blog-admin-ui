@@ -7,18 +7,17 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-  ColumnSort, 
-  SortingState, 
-  OnChangeFn 
+  SortingState,
+  OnChangeFn,
 } from "@tanstack/react-table";
 
 import styles from "./dataTable.module.css";
 import Modal from "../modal/Modal";
 import { IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 export interface DataTableProps {
   data: any;
@@ -49,10 +48,10 @@ const DataTable = ({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
-      sorting, // doğru tipi burada kullanın
+      sorting,
       globalFilter: filtering,
     },
-    onSortingChange: setSorting as OnChangeFn<SortingState>, // Tip dönüşümü
+    onSortingChange: setSorting as OnChangeFn<SortingState>,
     onGlobalFilterChange: setFiltering,
   });
 
@@ -70,7 +69,7 @@ const DataTable = ({
           <Tooltip title="Ekle">
             <IconButton
               onClick={() => setIsModalOpen(true)}
-              style={{ backgroundColor: "green", color: "white" }}
+              className={styles.addButton}
               size="small"
             >
               <AddIcon />

@@ -21,7 +21,11 @@ const CategoryActionButtons = ({
       <Tooltip title="Detayları Görüntüle">
         <IconButton
           onClick={() => onDetail(category)}
-          style={{ backgroundColor: "#1976d2", color: "white" }}
+          style={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            padding: "10px",
+          }}
           size="small"
         >
           <VisibilityIcon style={{ fontSize: "20px" }} />
@@ -30,7 +34,7 @@ const CategoryActionButtons = ({
       <Tooltip title="Güncelle">
         <IconButton
           onClick={() => onEdit(category)}
-          style={{ backgroundColor: "orange", color: "white" }}
+          style={{ backgroundColor: "orange", color: "white", padding: "10px" }}
           size="small"
         >
           <EditIcon style={{ fontSize: "20px" }} />
@@ -39,7 +43,11 @@ const CategoryActionButtons = ({
       <Tooltip title="Sil">
         <IconButton
           onClick={() => onDelete(category)}
-          style={{ backgroundColor: "#d32f2f", color: "white" }}
+          style={{
+            backgroundColor: "#d32f2f",
+            color: "white",
+            padding: "10px",
+          }}
           size="small"
         >
           <DeleteIcon style={{ fontSize: "20px" }} />

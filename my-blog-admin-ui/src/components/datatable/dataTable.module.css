@@ -39,8 +39,10 @@
 
 .datatable th,
 .datatable td {
-  padding: 10px; /* Adjust as needed */
-  text-align: left; /* Adjust text alignment as needed */
+  padding: 10px;
+  /* Adjust as needed */
+  text-align: left;
+  /* Adjust text alignment as needed */
   /* Other styles like font, color, etc., to ensure consistency */
 }
 
@@ -53,9 +55,12 @@
 /* Ensure that border, font size, and box-sizing are the same for both th and td */
 .datatable th,
 .datatable td {
-  border: 1px solid #ddd; /* Example border */
-  font-size: 16px; /* Example font size */
-  box-sizing: border-box; /* Ensures padding does not add to the total width */
+  border: 1px solid #ddd;
+  /* Example border */
+  font-size: 16px;
+  /* Example font size */
+  box-sizing: border-box;
+  /* Ensures padding does not add to the total width */
 }
 
 
@@ -145,8 +150,10 @@
 .datatable .search {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* This will vertically align the input and button */
-  padding-bottom: 10px; /* Adjust as needed */
+  align-items: center;
+  /* This will vertically align the input and button */
+  padding-bottom: 10px;
+  /* Adjust as needed */
 }
 
 /* Search input with 15% width */
@@ -158,23 +165,25 @@
 
 /* Add button */
 .datatable .addButton {
-  background-color: #6439ff; /* Your primary color */
-  color: white;
-  padding: 10px 20px;
-  margin-left: 10px; /* To add some space between the input and button */
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 4px;
+  background-color: #07bc0c;
+  box-shadow: 0 5px 0 #58a700;
 }
 
 .datatable .addButton:hover {
-  background-color: #5b33e8; /* A slightly darker shade for hover state */
+  background-color: #07bc0c;
+  box-shadow: 0 5px 0 #58a700;
+}
+
+.datatable .addButton:active {
+  box-shadow: none;
+  transform: translateY(5px);
+
 }
 
 .datatable .paginationContainer {
   display: flex;
-  justify-content: space-between; /* Separates the pagination and the selector */
+  justify-content: space-between;
+  /* Separates the pagination and the selector */
   align-items: center;
   padding-top: 10px;
 }
@@ -182,15 +191,18 @@
 
 /* Pagination container */
 .datatable .pagination {
-  flex-grow: 1; /* Takes up all available space */
+  flex-grow: 1;
+  /* Takes up all available space */
   display: flex;
-  gap: 5px; /* This adds space between your pagination buttons */
+  gap: 5px;
+  /* This adds space between your pagination buttons */
   /* Add more styles as needed, like padding or specific button styles */
 }
 
 .datatable .pageSizeSelector {
   margin-left: auto;
 }
+
 /* Select dropdown styles */
 .datatable .pageSizeSelector select {
   padding: 5px 10px;
@@ -200,6 +212,9 @@
   /* Add more styles if needed */
 }
 
+
+
+
 /* You may want to add responsive styles for smaller screens */
 @media screen and (max-width: 768px) {
   .datatable .pagination {
@@ -207,7 +222,8 @@
   }
 
   .datatable select {
-    margin-top: 10px; /* Adds space above the select on small screens */
+    margin-top: 10px;
+    /* Adds space above the select on small screens */
   }
 }
 
@@ -218,14 +234,13 @@
   }
 
   .datatable input[type="text"],
-  .datatable .addButton {
+  .datatable {
     width: 100%;
-    margin-bottom: 10px; /* Adds space below the input on small screens */
+    margin-bottom: 10px;
+    /* Adds space below the input on small screens */
   }
 
-  .datatable .addButton {
-    width: auto; /* Keeps the button width to content size */
-  }
+
 }
 
 
