@@ -1,4 +1,3 @@
-import styles from "./categoryUpdate.module.css";
 import modalStyles from "../../../components/modal/modal.module.css";
 import { useEffect, useState } from "react";
 import { UpdateCategoryCommand } from "../../../services/catagory/dtos/updateCategoryCommand";
@@ -48,6 +47,8 @@ const CategoryUpdate = observer(
         onUpdated();
       } catch (error: any) {
         handleApiError(error);
+      } finally {
+        uploadedFileStore.clearUploadedFile();
       }
     };
 
@@ -142,7 +143,7 @@ const CategoryUpdate = observer(
             <input
               type="checkbox"
               id="isPopular"
-              name="isPopuler"
+              name="isPopular"
               onChange={handleInputChange}
               checked={updateCategory.isPopular}
             />

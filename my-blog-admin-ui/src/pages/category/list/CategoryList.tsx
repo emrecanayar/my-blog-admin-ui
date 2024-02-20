@@ -183,6 +183,9 @@ const CategoryList = observer(() => {
       await fetchCategoriesData();
     } catch (error: any) {
       handleApiError(error);
+    } finally {
+      uploadedFileStore.clearUploadedFile();
+      resetCategoryState();
     }
   };
 

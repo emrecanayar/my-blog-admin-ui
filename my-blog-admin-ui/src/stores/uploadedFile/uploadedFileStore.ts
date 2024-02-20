@@ -26,6 +26,11 @@ export class UploadedFileStore extends BaseStore {
       throw error;
     }
   };
+
+  @action
+  clearUploadedFile = () => {
+    this.uploadedFile = {} as UploadedFileCreatedDto;
+  };
 }
 const uploadedFileStore = new UploadedFileStore();
 export default uploadedFileStore;
