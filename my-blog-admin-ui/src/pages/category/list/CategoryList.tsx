@@ -18,6 +18,7 @@ import { handleApiError } from "../../../helpers/errorHelpers";
 import useFileUpload from "../../../hooks/useFileUpload";
 import CategoryActionButtons from "../components/CategoryActionButtons";
 import config from "../../../config";
+import Layout from "../../../layout/Layout";
 
 const CategoryList = observer(() => {
   const [categoryItems, setCategoryItems] = useState<
@@ -255,25 +256,21 @@ const CategoryList = observer(() => {
   );
 
   return (
-    <div className={styles.list}>
-      <Sidebar />
-      <div className={styles.listContainer}>
-        <Navbar />
-        {isLoading ? (
-          <div className={styles.datatableContainer}>
-            <LoadingSpinner />
-          </div>
-        ) : (
-          <Datatable
-            data={categoryItems}
-            columns={categoryColumns}
-            tableTitle="Kategori Listesi"
-            modalContent={ModalContent}
-            modalTitle="Kategori Ekle"
-            handleSubmit={handleSubmit}
-          />
-        )}
-      </div>
+    <Layout>
+      {isLoading ? (
+        <div className={styles.datatableContainer}>
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <Datatable
+          data={categoryItems}
+          columns={categoryColumns}
+          tableTitle="Kategori Listesi"
+          modalContent={ModalContent}
+          modalTitle="Kategori Ekle"
+          handleSubmit={handleSubmit}
+        />
+      )}
       {isModalDetailOpen && selectedCategoryDetailId && (
         <CategoryDetail
           categoryId={selectedCategoryDetailId}
@@ -299,7 +296,7 @@ const CategoryList = observer(() => {
         pauseOnHover
         theme="light"
       />
-    </div>
+    </Layout>
   );
 });
 export default CategoryList;

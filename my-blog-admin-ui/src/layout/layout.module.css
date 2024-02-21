@@ -1,0 +1,34 @@
+/* Layout.module.css */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.layoutContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex-grow: 1;
+    /* Sidebar'ın genişliği dışında kalan tüm alanı kaplar */
+    padding: 20px;
+    /* İçerik için genel padding */
+    overflow: auto;
+    /* İçerik uzunsa kaydırma çubuğu göster */
+}
+
+/* Sidebar açıkken uygulanacak stil */
+.sidebarOpen {
+    width: 250px;
+    /* Genişliği artırın */
+    /* Diğer stiller */
+    transition: width 0.5s ease;
+}
+
+.sidebarClosed {
+    width: 0;
+    overflow: hidden; /* İçeriğin görünmesini engeller */
+    transition: width 0.5s ease; /* Açılıp kapanma animasyonu */
+  }

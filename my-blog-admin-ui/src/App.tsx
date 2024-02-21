@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
@@ -15,7 +14,6 @@ type Input = {
   placeholder: string;
 };
 
-const userInputs: Input[] = []; // Örnek veri yapısını tanımlayın
 const productInputs: Input[] = []; // Örnek veri yapısını tanımlayın
 
 function App() {
@@ -32,7 +30,7 @@ function App() {
               <Route index element={""} />
               <Route path=":productId" element={<Single />} />
               <Route
-                path="new"
+                path="news"
                 element={<New inputs={productInputs} title="Add New Product" />}
               />
             </Route>
