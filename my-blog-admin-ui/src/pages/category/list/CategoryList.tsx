@@ -1,7 +1,5 @@
 import styles from "./categoryList.module.css";
 import modalStyles from "../../../components/modal/modal.module.css";
-import Sidebar from "../../../components/sideBar/SideBar";
-import Navbar from "../../../components/navbar/Navbar";
 import Datatable from "../../../components/datatable/DataTable";
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
